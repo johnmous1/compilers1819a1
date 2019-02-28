@@ -12,19 +12,22 @@ def getchar(text,pos):
 
 	c = text[pos]
 
-	if c=='5': return 'FIVE'
+
 
 	if c=='3': return 'THREE'
 
 	if c =='0': return 'ZERO'
 
+	if c>='0' and c<='2': return 'ZETW'
+
+	if c>='0' and c<='5': return 'ZEFI'
+
 
 
 	if c>='0' and c<='9': return 'DIGIT'	# 0..9 grouped together
 
-	if c>='0' and c<='4': return 'ZEFO'
 
-	if c>='0' and c<='2': return 'ZETW'
+
 
 
 
@@ -87,19 +90,19 @@ def scan(text,transitions,accepts):
 
 # the transition table, as a dictionary
 # states that have no outgoing edges are not in this dict
-transitions = { 's0': { 'ZERO':'s1','ZETO':'s1','THREE':'s4' },
-       			's1': { 'FIVE':'s2','THREE':'s2','ZERO':'s2','ZETW':'s2','ZEFO':'s2','DIGIT':'s2'},
-				's2': { 'FIVE':'s3','THREE':'s3','ZERO':'s3','ZETW':'s3','ZEFO':'s3','DIGIT':'s3'},
-				's3': { 'FIVE':'s8','THREE':'s8','ZERO':'s8','ZETW':'s8','ZEFO':'s8','DIGIT':'s8' },
-				's4': { 'THREE':'s5','ZERO':'s5','ZETW':'s5','ZEFO':'s5','FIVE':'s6' },
-				's5': { 'FIVE':'s3','THREE':'s3','ZERO':'s3','ZETW':'s3','ZEFO':'s3','DIGIT':'s3' },
-				's6': { 'ZERO':'s7' },
-				's7': { 'FIVE':'s8','THREE':'s8','ZERO':'s8','ZETW':'s8','ZEFO':'s8','DIGIT':'s8' },
-				's8': { 'FIVE':'s9','THREE':'s9','ZERO':'s9','ZETW':'s9','ZEFO':'s9','DIGIT':'s9' },
+transitions = { 's0': { 'ZERO':'s1','ZETW':'s1','THREE':'s4' },
+       			's1': { 'THREE':'s2','ZERO':'s2','ZETW':'s2','ZEFI':'s2','DIGIT':'s2'},
+				's2': { 'ZERO':'s3',},
+				's3': { 'THREE':'s8','ZERO':'s8','ZETW':'s8','ZEFI':'s8','DIGIT':'s8' },
+				's4': { 'THREE':'s5','ZERO':'s5','ZETW':'s5','ZEFI':'s5' },
+				's5': { 'ZERO':'s3' },
+
+
+				's8': { 'THREE':'s9','ZERO':'s9','ZETW':'s9','ZEFI':'s9','DIGIT':'s9' },
 
 				's9': { 'GRAM':'s10','KAPPA':'s13','EM':'s15' },
-				's10': { 'FIVE':'s11','THREE':'s11','ZERO':'s11','ZETW':'s11','ZEFO':'s11','DIGIT':'s11' },
-				's11': { 'FIVE':'s12','THREE':'s12','ZERO':'s12','ZETW':'s12','ZEFO':'s12','DIGIT':'s12' },
+				's10': { 'THREE':'s11','ZERO':'s11','ZETW':'s11','ZEFI':'s11','DIGIT':'s11' },
+				's11': { 'THREE':'s12','ZERO':'s12','ZETW':'s12','ZEFI':'s12','DIGIT':'s12' },
 				's12': { 'KAPPA':'s13','EM':'s15' },
 				's13': { 'TAF':'s14' },
 				's14': { 'TAF':'s14'  },
@@ -112,7 +115,7 @@ transitions = { 's0': { 'ZERO':'s1','ZETO':'s1','THREE':'s4' },
 
 # the dictionary of accepting states and their
 # corresponding token
-accepts = { 's1':'INT_TOKEN',
+accepts = { #'s1':'INT_TOKEN',
        		's14':'WIND_TOKEN',
 			's17':'WIND_TOKEN'
 
